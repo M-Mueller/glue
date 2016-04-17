@@ -4,8 +4,6 @@
 #include "glue/GlConfig.h"
 #include "glue/GlBuffer.h"
 
-#include <glm/glm.hpp>
-
 #include <vector>
 
 /**
@@ -96,10 +94,6 @@ private:
 	std::vector<VertexAttribute> _attributes;
 	size_t _numVertices;
 };
-
-static_assert(sizeof(glm::vec2) == sizeof(float) * 2, "glm vector type not aligned correctly");
-static_assert(sizeof(glm::vec3) == sizeof(float) * 3, "glm vector type not aligned correctly");
-static_assert(sizeof(glm::vec4) == sizeof(float) * 4, "glm vector type not aligned correctly");
 
 template<typename T, typename... U>
 void GlVertexBuffer::setData(Usage usage, std::vector<T> a0, std::vector<U>... a)
