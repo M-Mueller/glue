@@ -8,6 +8,7 @@
 #include "glue/GlFrameBuffer.h"
 #include "glue/GlTexture.h"
 #include "glue/GlShader.h"
+#include "glue/GlQuery.h"
 
 #include "glad/glad.h"
 
@@ -35,6 +36,7 @@ extern std::map<GlTexture::PixelType, GLenum> mapTexturePixelType;
 extern std::map<GlTexture::MinFilter, GLint> mapMinFilter;
 extern std::map<GlTexture::MagFilter, GLint> mapMagFilter;
 extern std::map<GlShader::Type, GLenum> mapShaderType;
+extern std::map<GlQuery::Target, GLenum> mapQueryTarget;
 
 inline void logGLerror(const char* file, const char* function, int line)
 {

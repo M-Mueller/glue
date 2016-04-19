@@ -145,3 +145,8 @@ std::map<GlTexture::MagFilter, GLint> mapMagFilter =
     { GlTexture::MagFilter::Nearest, GL_NEAREST },
     { GlTexture::MagFilter::Linear, GL_LINEAR }
 };
+
+std::map<GlQuery::Target, GLenum> mapQueryTarget =
+{
+    { GlQuery::Target::TimeElapsed, GL_TIME_ELAPSED }
+};

@@ -69,6 +69,7 @@ set(SOURCES src/GlBuffer.cpp
         src/GlTexture3D.cpp
         src/GlFrameBuffer.cpp
         src/GlRenderBuffer.cpp
+        src/GlQuery.cpp
 	src/glad.c
 )
 
@@ -86,6 +87,7 @@ set(HEADERS include/glue/GlBuffer.h
         include/glue/GlTexture3D.h
         include/glue/GlFrameBuffer.h
         include/glue/GlRenderBuffer.h
+        include/glue/GlQuery.h
 )
 
 add_library(glue ${SOURCES} ${HEADERS})
