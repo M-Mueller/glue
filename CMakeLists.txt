@@ -3,6 +3,7 @@ project(glue)
 
 option(BUILD_SAMPLES "Build examples" on)
 option(WITH_LIBPNG "Load texture from png files" on)
+option(WITH_GLM "Support for glm types (e.g. in GlProgram)" on)
 option(WITH_QT "Support for Qt types (e.g. in GlProgram)" on)
 option(WITH_EASYLOGGING "Enable logging with easylogging++" on)
 option(GL_DEBUG "Enables error checks for all OpenGL calls" on)
@@ -17,6 +18,10 @@ if(WITH_LIBPNG)
     set(GLUE_LIBPNG 1)
     add_definitions(${PNG_DEFINITIONS})
     include_directories(${PNG_INCLUDE_DIRS})
+endif()
+
+if(WITH_GLM)
+    set(GLUE_GLM 1)
 endif()
 
 find_package(Qt5Core)
@@ -40,21 +45,24 @@ if(BUILD_DOCUMENTATION)
     find_package(Doxygen)
     if(NOT DOXYGEN_FOUND)
         message(FATAL_ERROR "Doxygen must be installed to build the documentation.")
-        else()
-            configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-            add_custom_target(doc
-                    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                    COMMENT "Generating Doxygen documentation"
-                    VERBATIM)
+    else()
+        configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+        add_custom_target(doc
+            COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMENT "Generating Doxygen documentation"
+            VERBATIM)
     endif()
 endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/glue/GlConfig.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/glue/GlConfig.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/glue/GlConfig.h.in include/glue/GlConfig.h)
 
-include_directories(include)
+include_directories(
+    include
+    ${CMAKE_CURRENT_BINARY_DIR}/include
+)
 
 set(SOURCES src/GlBuffer.cpp
         src/GlInternal.cpp
@@ -102,7 +110,12 @@ if(WITH_QT)
 endif()
 
 if(BUILD_SAMPLES)
-    add_subdirectory(samples)
+    if(WITH_GLM)
+        add_subdirectory(samples)
+    else()
+        message(WARNING "Samples require glm support")
+        set(BUILD_SAMPLES off)
+    endif()
 endif()
 
 install(TARGETS glue ARCHIVE DESTINATION lib)

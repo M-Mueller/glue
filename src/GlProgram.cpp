@@ -157,6 +157,7 @@ int GlProgram::getUniformLocation(const std::string& name)
     return location;
 }
 
+#ifdef GLUE_GLM
 void GlProgram::setUniform(const std::string &name, const glm::mat4 &value)
 {
     int location = getUniformLocation(name);
@@ -174,6 +175,7 @@ void GlProgram::setUniform(const std::string& name, const glm::vec3& value)
 #endif
     GL_SAFE_CALL(glUniform3fv(location, 3, glm::value_ptr(value)));
 }
+#endif
 
 void GlProgram::setUniform(const std::__cxx11::string& name, const QColor& value)
 {

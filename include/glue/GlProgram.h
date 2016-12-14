@@ -152,10 +152,12 @@ public:
     void setUniform(const std::string& name, float value);
     /// \see <a href="https://www.opengl.org/sdk/docs/man/html/glUniform.xhtml">glUniform1f</a>
     void setUniform(const std::string& name, double value);
+#ifdef GLUE_GLM
     /// \see <a href="https://www.opengl.org/sdk/docs/man/html/glUniform.xhtml">glUniformMatrix4fv</a>
     void setUniform(const std::string& name, const glm::mat4 &value);
     /// \see <a href="https://www.opengl.org/sdk/docs/man/html/glUniform.xhtml">glUniform3f</a>
     void setUniform(const std::string& name, const glm::vec3 &value);
+#endif
 #ifdef GLUE_QT
     /// \see <a href="https://www.opengl.org/sdk/docs/man/html/glUniform.xhtml">glUniform2f</a>
     void setUniform(const std::string& name, const QVector2D &value);

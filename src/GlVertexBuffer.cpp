@@ -48,15 +48,16 @@ GlVertexBuffer::VertexAttribute GlVertexBuffer::attribute(unsigned int index) co
 	}
 }
 
-static_assert(sizeof(glm::vec2) == sizeof(float) * 2, "glm vector type not aligned correctly");
-static_assert(sizeof(glm::vec3) == sizeof(float) * 3, "glm vector type not aligned correctly");
-static_assert(sizeof(glm::vec4) == sizeof(float) * 4, "glm vector type not aligned correctly");
-
 template<>
 GlVertexBuffer::VertexAttribute GlVertexBuffer::createAttribute<float>(unsigned int index)
 {
     return VertexAttribute(index, 1, VertexAttribute::Float);
 }
+
+#ifdef GLUE_GLM
+static_assert(sizeof(glm::vec2) == sizeof(float) * 2, "glm vector type not aligned correctly");
+static_assert(sizeof(glm::vec3) == sizeof(float) * 3, "glm vector type not aligned correctly");
+static_assert(sizeof(glm::vec4) == sizeof(float) * 4, "glm vector type not aligned correctly");
 
 template<>
 GlVertexBuffer::VertexAttribute GlVertexBuffer::createAttribute<glm::vec2>(unsigned int index)
@@ -75,6 +76,7 @@ GlVertexBuffer::VertexAttribute GlVertexBuffer::createAttribute<glm::vec4>(unsig
 {
     return VertexAttribute(index, 4, VertexAttribute::Float);
 }
+#endif
 
 #ifdef GLUE_QT
 static_assert(sizeof(QVector2D) == sizeof(float) * 2, "QVector2D not aligned correctly");
