@@ -18,12 +18,12 @@ GlBuffer::~GlBuffer()
 
 void GlBuffer::bind()
 {
-    GL_SAFE_CALL(glBindBuffer(mapBufferTarget[_target], _id));
+    GL_SAFE_CALL(glBindBuffer(mapBufferTarget(_target), _id));
 }
 
 void GlBuffer::release()
 {
-    GL_SAFE_CALL(glBindBuffer(mapBufferTarget[_target], 0));
+    GL_SAFE_CALL(glBindBuffer(mapBufferTarget(_target), 0));
 }
 
 bool GlBuffer::isBound() const
@@ -48,7 +48,7 @@ void GlBuffer::setData(Usage usage, void* data, size_t size)
     if(!isBound()) LOG(DEBUG) << "Buffer is not bound!";
 #endif
 
-    GL_SAFE_CALL(glBufferData(mapBufferTarget[_target], (GLsizei)size, (GLvoid*)data, mapBufferUsage[usage]));
+    GL_SAFE_CALL(glBufferData(mapBufferTarget(_target), (GLsizei)size, (GLvoid*)data, mapBufferUsage(usage)));
     _size = size;
 }
 
@@ -59,5 +59,5 @@ void GlBuffer::setSubData(void* data, size_t size, size_t offset)
 #endif
 
     assert(offset+size <= _size);
-    GL_SAFE_CALL(glBufferSubData(mapBufferTarget[_target], (GLintptr)offset, (GLsizei)size, (GLvoid*)data));
+    GL_SAFE_CALL(glBufferSubData(mapBufferTarget(_target), (GLintptr)offset, (GLsizei)size, (GLvoid*)data));
 }

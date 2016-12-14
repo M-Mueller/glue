@@ -38,7 +38,7 @@ void GlTexture::bind(int unit)
     {
         GL_SAFE_CALL(glActiveTexture(GL_TEXTURE0+unit));
     }
-    GL_SAFE_CALL(glBindTexture(mapTextureType[type()], _id));
+    GL_SAFE_CALL(glBindTexture(mapTextureType(type()), _id));
 }
 
 void GlTexture::release(int unit)
@@ -47,15 +47,15 @@ void GlTexture::release(int unit)
     {
         GL_SAFE_CALL(glActiveTexture(GL_TEXTURE0+unit));
     }
-    GL_SAFE_CALL(glBindTexture(mapTextureType[type()], 0));
+    GL_SAFE_CALL(glBindTexture(mapTextureType(type()), 0));
 }
 
 void GlTexture::setMinFilter(GlTexture::MinFilter filter)
 {
-    GL_SAFE_CALL(glTexParameteri(mapTextureType[type()], GL_TEXTURE_MIN_FILTER, mapMinFilter[filter]));
+    GL_SAFE_CALL(glTexParameteri(mapTextureType(type()), GL_TEXTURE_MIN_FILTER, mapMinFilter(filter)));
 }
 
 void GlTexture::setMagFilter(GlTexture::MagFilter filter)
 {
-    GL_SAFE_CALL(glTexParameteri(mapTextureType[type()], GL_TEXTURE_MAG_FILTER, mapMagFilter[filter]));
+    GL_SAFE_CALL(glTexParameteri(mapTextureType(type()), GL_TEXTURE_MAG_FILTER, mapMagFilter(filter)));
 }

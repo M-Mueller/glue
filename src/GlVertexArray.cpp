@@ -45,7 +45,7 @@ void GlVertexArray::setVertexData(GlVertexBuffer& vbo)
 	{
         // set the layout of each attribute
 		auto attribute = vbo.attribute(a);
-        GL_SAFE_CALL(glVertexAttribPointer(attribute.index, attribute.size, mapVertexAttributeType[attribute.type], attribute.normalized, attribute.stride, (void*)((char*)0 + attribute.pointer)));
+        GL_SAFE_CALL(glVertexAttribPointer(attribute.index, attribute.size, mapVertexAttributeType(attribute.type), attribute.normalized, attribute.stride, (void*)((char*)0 + attribute.pointer)));
         if(_autoEnableAttributes)
             enableAttribute(a);
 	}
@@ -74,7 +74,7 @@ void GlVertexArray::draw(GlVertexArray::Primitive mode)
     if(!isBound()) LOG(DEBUG) << "VertexArray is not bound!";
 #endif
 
-    GL_SAFE_CALL(glDrawArrays(mapVertexArrayPrimitive[mode], 0, _numVertices));
+    GL_SAFE_CALL(glDrawArrays(mapVertexArrayPrimitive(mode), 0, _numVertices));
 }
 
 void GlVertexArray::drawElements(GlVertexArray::Primitive mode)
@@ -83,7 +83,7 @@ void GlVertexArray::drawElements(GlVertexArray::Primitive mode)
     if(!isBound()) LOG(DEBUG) << "VertexArray is not bound!";
 #endif
 
-    GL_SAFE_CALL(glDrawElements(mapVertexArrayPrimitive[mode], _numIndices, mapIndexBufferIndexType[_indexType], 0));
+    GL_SAFE_CALL(glDrawElements(mapVertexArrayPrimitive(mode), _numIndices, mapIndexBufferIndexType(_indexType), 0));
 }
 
 void GlVertexArray::enableAttribute(unsigned int index)

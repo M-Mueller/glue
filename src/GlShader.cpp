@@ -11,7 +11,7 @@ GlShader::GlShader(GlShader::Type type, const std::string& source):
 	_type(type),
 	_id(0)
 {
-    _id = GL_SAFE_CALL(glCreateShader(mapShaderType[_type]));
+    _id = GL_SAFE_CALL(glCreateShader(mapShaderType(_type)));
 	setSource(source);
 }
 

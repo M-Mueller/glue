@@ -15,12 +15,12 @@ GlQuery::~GlQuery()
 
 void GlQuery::begin()
 {
-    GL_SAFE_CALL(glBeginQuery(mapQueryTarget[_target], _id));
+    GL_SAFE_CALL(glBeginQuery(mapQueryTarget(_target), _id));
 }
 
 void GlQuery::end()
 {
-    GL_SAFE_CALL(glEndQuery(mapQueryTarget[_target]));
+    GL_SAFE_CALL(glEndQuery(mapQueryTarget(_target)));
 }
 
 uint32_t GlQuery::retrieve()

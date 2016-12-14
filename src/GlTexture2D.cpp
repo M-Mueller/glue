@@ -24,13 +24,13 @@ void GlTexture2D::setImageData(GlTexture::InternalFormat format, int width, int 
     if(!isBound())
         LOG(WARNING) << "Texture2D is not bound!";
 #endif
-    GL_SAFE_CALL(glTexImage2D(mapTextureType[type()], 0, mapTextureInternalFormat[format], width, height, 0, mapTexturePixelFormat[pixelFormat], mapTexturePixelType[pixelType], pixeldata));
+    GL_SAFE_CALL(glTexImage2D(mapTextureType(type()), 0, mapTextureInternalFormat(format), width, height, 0, mapTexturePixelFormat(pixelFormat), mapTexturePixelType(pixelType), pixeldata));
     _format = format;
     _width = width;
     _height = height;
     // disable default midmap levels
-    GL_SAFE_CALL(glTexParameteri(mapTextureType[type()], GL_TEXTURE_BASE_LEVEL, 0));
-    GL_SAFE_CALL(glTexParameteri(mapTextureType[type()], GL_TEXTURE_MAX_LEVEL, 0));
+    GL_SAFE_CALL(glTexParameteri(mapTextureType(type()), GL_TEXTURE_BASE_LEVEL, 0));
+    GL_SAFE_CALL(glTexParameteri(mapTextureType(type()), GL_TEXTURE_MAX_LEVEL, 0));
 }
 
 void GlTexture2D::resize(GlTexture::InternalFormat format, int width, int height)
@@ -39,13 +39,13 @@ void GlTexture2D::resize(GlTexture::InternalFormat format, int width, int height
     if(!isBound())
         LOG(WARNING) << "Texture2D is not bound!";
 #endif
-    GL_SAFE_CALL(glTexImage2D(mapTextureType[type()], 0, mapTextureInternalFormat[format], width, height, 0, GL_RED, GL_UNSIGNED_BYTE, 0)); // format and type are irrelevant
+    GL_SAFE_CALL(glTexImage2D(mapTextureType(type()), 0, mapTextureInternalFormat(format), width, height, 0, GL_RED, GL_UNSIGNED_BYTE, 0)); // format and type are irrelevant
     _format = format;
     _width = width;
     _height = height;
     // disable default midmap levels
-    GL_SAFE_CALL(glTexParameteri(mapTextureType[type()], GL_TEXTURE_BASE_LEVEL, 0));
-    GL_SAFE_CALL(glTexParameteri(mapTextureType[type()], GL_TEXTURE_MAX_LEVEL, 0));
+    GL_SAFE_CALL(glTexParameteri(mapTextureType(type()), GL_TEXTURE_BASE_LEVEL, 0));
+    GL_SAFE_CALL(glTexParameteri(mapTextureType(type()), GL_TEXTURE_MAX_LEVEL, 0));
 }
 
 int GlTexture2D::width()

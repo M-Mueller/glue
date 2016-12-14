@@ -43,7 +43,7 @@ void GlRenderBuffer::resize(GlTexture::InternalFormat format, int width, int hei
     if(!isBound())
         LOG(WARNING) << "RenderBuffer is not bound!";
 #endif
-    GL_SAFE_CALL(glRenderbufferStorage(GL_RENDERBUFFER, mapTextureInternalFormat[format], width, height));
+    GL_SAFE_CALL(glRenderbufferStorage(GL_RENDERBUFFER, mapTextureInternalFormat(format), width, height));
     _format = format;
     _width = width;
     _height = height;

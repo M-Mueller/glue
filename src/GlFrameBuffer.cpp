@@ -16,13 +16,13 @@ GlFrameBuffer::~GlFrameBuffer()
 
 void GlFrameBuffer::bind(Target target)
 {
-    GL_SAFE_CALL(glBindFramebuffer(mapFrameBufferTarget[target], _id));
+    GL_SAFE_CALL(glBindFramebuffer(mapFrameBufferTarget(target), _id));
 }
 
 
 void GlFrameBuffer::release(Target target)
 {
-    GL_SAFE_CALL(glBindFramebuffer(mapFrameBufferTarget[target], 0));
+    GL_SAFE_CALL(glBindFramebuffer(mapFrameBufferTarget(target), 0));
 }
 
 bool GlFrameBuffer::isBound() const
@@ -44,13 +44,13 @@ void GlFrameBuffer::attach(const GlTexture1D& texture, GlFrameBuffer::Attachment
         LOG(WARNING) << "Attaching depth format to color attachment";
 #endif
 
-    GL_SAFE_CALL(glFramebufferTexture1D(GL_FRAMEBUFFER, mapFrameBufferAttachment[position], GL_TEXTURE_1D, texture.id(), level));
+    GL_SAFE_CALL(glFramebufferTexture1D(GL_FRAMEBUFFER, mapFrameBufferAttachment(position), GL_TEXTURE_1D, texture.id(), level));
 
     if(position != Attachment::Depth && position != Attachment::Stencil)
     {
         if(static_cast<int>(position) >= (int)_attachments.size())
             _attachments.resize(static_cast<int>(position)+1, GL_NONE);
-        _attachments.at(static_cast<int>(position)) = mapFrameBufferAttachment[position];
+        _attachments.at(static_cast<int>(position)) = mapFrameBufferAttachment(position);
     }
 }
 
@@ -66,13 +66,13 @@ void GlFrameBuffer::attach(const GlTexture2D& texture, Attachment position, int 
         LOG(WARNING) << "Attaching depth format to color attachment";
 #endif
 
-    GL_SAFE_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, mapFrameBufferAttachment[position], GL_TEXTURE_2D, texture.id(), level));
+    GL_SAFE_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, mapFrameBufferAttachment(position), GL_TEXTURE_2D, texture.id(), level));
 
     if(position != Attachment::Depth && position != Attachment::Stencil)
     {
         if(static_cast<int>(position) >= (int)_attachments.size())
             _attachments.resize(static_cast<int>(position)+1, GL_NONE);
-        _attachments.at(static_cast<int>(position)) = mapFrameBufferAttachment[position];
+        _attachments.at(static_cast<int>(position)) = mapFrameBufferAttachment(position);
     }
 }
 
@@ -86,13 +86,13 @@ void GlFrameBuffer::attach(const GlRenderBuffer& renderbuffer, Attachment positi
     else if(position != Attachment::Depth && renderbuffer.hasDepthFormat())
         LOG(WARNING) << "Attaching depth format to color attachment";
 #endif
-    GL_SAFE_CALL(glFramebufferRenderbuffer(GL_FRAMEBUFFER, mapFrameBufferAttachment[position], GL_RENDERBUFFER, renderbuffer.id()));
+    GL_SAFE_CALL(glFramebufferRenderbuffer(GL_FRAMEBUFFER, mapFrameBufferAttachment(position), GL_RENDERBUFFER, renderbuffer.id()));
 
     if(position != Attachment::Depth && position != Attachment::Stencil)
     {
         if(static_cast<int>(position) >= (int)_attachments.size())
             _attachments.resize(static_cast<int>(position)+1, GL_NONE);
-        _attachments.at(static_cast<int>(position)) = mapFrameBufferAttachment[position];
+        _attachments.at(static_cast<int>(position)) = mapFrameBufferAttachment(position);
     }
 }
 
@@ -103,7 +103,7 @@ void GlFrameBuffer::detach(Attachment position)
         LOG(DEBUG) << "FrameBuffer is not bound!";
 #endif
 
-    GL_SAFE_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, mapFrameBufferAttachment[position], GL_TEXTURE_2D, 0, 0));
+    GL_SAFE_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, mapFrameBufferAttachment(position), GL_TEXTURE_2D, 0, 0));
 
     if(position != Attachment::Depth && position != Attachment::Stencil)
     {
@@ -137,7 +137,7 @@ bool GlFrameBuffer::isComplete(Target target) const
     if(!isBound()) LOG(DEBUG) << "FrameBuffer is not bound!";
 #endif
 
-    GLenum completeness = GL_SAFE_CALL(glCheckFramebufferStatus(mapFrameBufferTarget[target]));
+    GLenum completeness = GL_SAFE_CALL(glCheckFramebufferStatus(mapFrameBufferTarget(target)));
     return completeness == GL_FRAMEBUFFER_COMPLETE;
 }
 
