@@ -96,6 +96,7 @@ set(HEADERS include/glue/GlBuffer.h
         include/glue/GlFrameBuffer.h
         include/glue/GlRenderBuffer.h
         include/glue/GlQuery.h
+        include/glue/GlUtils.h
 )
 
 add_library(glue ${SOURCES} ${HEADERS})

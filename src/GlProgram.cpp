@@ -263,3 +263,20 @@ void GlProgram::setUniform(const std::string& name, double value)
 #endif
     GL_SAFE_CALL(glUniform1f(location, static_cast<float>(value)));
 }
+
+namespace GlUtils
+{
+    template<>
+    bind_guard<GlProgram>::bind_guard(GlProgram& object):
+        _object(object)
+    {
+        _object.activate();
+    }
+
+    template<>
+    GlUtils::bind_guard<GlProgram>::~bind_guard()
+    {
+        _object.deactivate();
+    }
+
+}

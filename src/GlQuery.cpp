@@ -36,3 +36,19 @@ uint64_t GlQuery::retrieve64()
     GL_SAFE_CALL(glGetQueryObjectui64v(_id, GL_QUERY_RESULT, &param));
     return param;
 }
+
+namespace GlUtils
+{
+    template<>
+    bind_guard<GlQuery>::bind_guard(GlQuery &object):
+        _object(object)
+    {
+        _object.begin();
+    }
+
+    template<>
+    bind_guard<GlQuery>::~bind_guard()
+    {
+        _object.end();
+    }
+}

@@ -3,6 +3,7 @@
 
 #include "glue/GlConfig.h"
 #include "glue/GlShader.h"
+#include "glue/GlUtils.h"
 
 #ifdef GLUE_QT
 #include <QtGui/QVector2D>
@@ -183,5 +184,15 @@ private:
 	std::shared_ptr<GlGeometryShader> _gs;
 	std::shared_ptr<GlFragmentShader> _fs;
 };
+
+namespace GlUtils
+{
+    // Specialization because GlProgram does not use bind/release syntax
+    template<>
+    bind_guard<GlProgram>::bind_guard(GlProgram& object);
+
+    template<>
+    bind_guard<GlProgram>::~bind_guard();
+}
 
 #endif // GLPROGRAM_H

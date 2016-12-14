@@ -2,6 +2,7 @@
 #define GLQUERY_H
 
 #include "glue/GlConfig.h"
+#include "glue/GlUtils.h"
 #include <cstdint>
 
 /**
@@ -68,5 +69,15 @@ private:
     const Target _target;
     unsigned int _id;
 };
+
+namespace GlUtils
+{
+    // Specialization because GlQuery does not use bind/release syntax
+    template<>
+    bind_guard<GlQuery>::bind_guard(GlQuery& object);
+
+    template<>
+    bind_guard<GlQuery>::~bind_guard();
+}
 
 #endif // GLQUERY_H
